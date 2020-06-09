@@ -14,15 +14,19 @@ passport.use(
             clientSecret: keys.googleClientSecret,
             callbackURL: CALLBACKURL
         },
-        accessToken => {
-            console.log(accessToken);
+        (accessToken, refreshToken, profile, cb) => {
+            console.log('access token', accessToken);
+            console.log('refresh token', refreshToken);
+            console.log('profile: ', profile)
         }
     )
 );
 
 app.get('/auth/google', passport.authenticate('google', {
-    scope: ["profile", "email"]
+    scope: ["profile", "email"] // info we need from google about the user
 }));
+
+app.get('/auth/google/callback', passport.authenticate('google'));
 
 app.get('/', (req, res) => {
     res.send({ message: "Up and Running!" });
