@@ -26,6 +26,9 @@ app.get('/auth/google', passport.authenticate('google', {
     scope: ["profile", "email"] // info we need from google about the user
 }));
 
+// this is the callback route that when passport sees the code it realizes that
+// the user is not attempting to be authentecated for the first time
+// but attempting to turn that code into a profile
 app.get('/auth/google/callback', passport.authenticate('google'));
 
 app.get('/', (req, res) => {
