@@ -16,4 +16,6 @@ mongoose.connect(keys.mongoURI, {
 
 // Listen to the enviroment port (Heroku) or the development port
 const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+app.listen(PORT, () => {
+    console.log(`Server is up and running on port: ${PORT}!`);
+});
