@@ -1,0 +1,31 @@
+{
+  "name": "Easy-Survey-Backend",
+  "version": "1.0.0",
+  "description": "A web application used by startups to collect feedbacks about their products easily.",
+  "main": "index.js",
+  "engines": {
+    "node": "12.18.0",
+    "npm": "6.14.4"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramikhafagi96/Easy-Survey-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramikhafagi96/Easy-Survey-Backend/issues"
+  },
+  "homepage": "https://github.com/ramikhafagi96/Easy-Survey-Backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
