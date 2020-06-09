@@ -2,13 +2,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
+const passport = require('passport');
 require('./db/models/user');
 require('./services/passport'); // because we're not requiring anything from it
 var indexRouter = require('./routes/index');
 
 // Binding routes
+app.use(passport.initialize());
 app.use('/v1/easy-survey',indexRouter(app));
-
 // Connect to MongoDB database
 mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,

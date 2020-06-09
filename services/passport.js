@@ -1,9 +1,20 @@
 const passport = require('passport');
 const keys = require('../config/keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const userService = new (require('../db/models_services/user_service'))();
 const CALLBACKURL = '/v1/easy-survey/auth/google/callback';
 
-const userService = new (require('../db/models_services/user_service'))();
+passport.serializeUser((user, done) => {
+    // set user id as a cookie in the user's browser
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    const user = await userService.findUserById(id);
+    done(null, user);
+});
+
+
 // Passport Configuration
 
 // Google Strategy Configuration
@@ -14,11 +25,13 @@ passport.use(
             clientSecret: keys.googleClientSecret,
             callbackURL: CALLBACKURL
         },
-        (accessToken, refreshToken, profile, done) => {
-            if(!userService.findUserByProfileId(profile.id)) {
-                userService.createUser({ googleId: profile.id });
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await userService.findUserByProfileId(profile.id);
+            if(existingUser) {
+                done(null, existingUser);
             } else{
-                console.log("already exists"); 
+                const newUser = await userService.createUser({ googleId: profile.id });
+                done(null, newUser);
             }
         }
     )

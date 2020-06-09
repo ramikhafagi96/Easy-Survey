@@ -2,20 +2,19 @@ const mongoose = require('mongoose');
 const userModel = mongoose.model('users');
 
 class UserService {
-    createUser(userObject) {
-        const user = new userModel(userObject).save();
-        if(user) {
-            return user;
-        }
+    async createUser(userObject) {
+        const user = await new userModel(userObject).save();
+        return user;
     }
 
     async findUserByProfileId(googleId) {
         const user = await userModel.findOne({ googleId: googleId });
-        if(user) {
-            return true;
-        } else {
-            return false
-        }
+        return user;
+    }
+
+    async findUserById(id) {
+        const user = await userModel.findById(id);
+        return user;
     }
 }
 
