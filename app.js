@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
+require('./db/models/user');
 require('./services/passport'); // because we're not requiring anything from it
 var indexRouter = require('./routes/index');
 
