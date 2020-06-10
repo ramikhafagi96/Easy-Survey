@@ -1,5 +1,5 @@
 {
-  "name": "Easy-Survey-Backend",
+  "name": "Easy-Survey",
   "version": "1.0.0",
   "description": "A web application used by startups to collect feedbacks about their products easily.",
   "main": "app.js",
