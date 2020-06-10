@@ -2,7 +2,7 @@ const passport = require('passport');
 const keys = require('../config/keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const userServices = require('../db/models_services/user_services');
-const CALLBACKURL = '/v1/easy-survey/auth/google/callback';
+const CALLBACK_URL = '/v1/easy-survey/auth/google/callback';
 
 passport.serializeUser((user, done) => {
     // set user id as a cookie in the user's browser
@@ -23,7 +23,7 @@ passport.use(
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: CALLBACKURL
+            callbackURL: CALLBACK_URL
         },
         async (accessToken, refreshToken, profile, done) => {
             const existingUser = await userServices.findUserByProfileId(profile.id);
