@@ -18,7 +18,7 @@ app.use(passport.session()); // to use cookies
 app.get('/', (req,res) => {
     res.send({ message: "Up and Running!"});
 })
-app.use('/v1/easy-survey',indexRouter(app));
+app.use('/api/v1',indexRouter(app));
 // Connect to MongoDB database
 mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,
