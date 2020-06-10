@@ -23,7 +23,8 @@ passport.use(
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: CALLBACK_URL
+            callbackURL: CALLBACK_URL,
+            proxy: true // if request run through any proxy trust it
         },
         async (accessToken, refreshToken, profile, done) => {
             const existingUser = await userServices.findUserByProfileId(profile.id);
