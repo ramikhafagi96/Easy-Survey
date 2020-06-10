@@ -18,7 +18,7 @@ app.use(passport.session()); // to use cookies
 app.get('/', (req,res) => {
     res.send({ message: "Up and Running!"});
 })
-app.use('/api/v1',indexRouter(app));
+app.use('/api',indexRouter(app));
 // Connect to MongoDB database
 mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,
