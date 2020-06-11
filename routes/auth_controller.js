@@ -8,12 +8,12 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 router.get('/google/callback', passport.authenticate('google'), (req,res) => {
-    res.redirect('/');
+    res.redirect('/surveys');
 });
 
 router.get('/logout', (req,res) => {
     req.logOut(); // it takes the cookie that contais the user id and kill the cookie
-    res.send({ message: "user logged out"});
+    res.redirect('/');
 });
 /*--------------------------------------------------------*/
 module.exports = function (indexRouter) {
