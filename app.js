@@ -6,6 +6,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 require('./db/models/user');
+require('./db/models/survey');
 require('./services/passport'); // because we're not requiring anything from it
 var indexRouter = require('./routes/index');
 
