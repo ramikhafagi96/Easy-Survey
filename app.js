@@ -17,9 +17,6 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // to use cookies
-app.get('/', (req,res) => {
-    res.send({ message: "Up and Running!"});
-})
 app.use('/api',indexRouter(app));
 // Connect to MongoDB database
 mongoose.connect(keys.mongoURI, {
