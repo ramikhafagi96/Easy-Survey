@@ -16,9 +16,16 @@ async function findUserById(id) {
     return user;
 }
 
+async function updateUserCredits(googleId) {
+    const user = await userModel.findOneAndUpdate({ googleId: googleId }, { $inc: { 'credits': 5 } }, { new: true }); 
+    if(user) 
+        return user;
+}
+
 
 module.exports = {
     createUser,
     findUserByProfileId,
-    findUserById
+    findUserById,
+    updateUserCredits
 };

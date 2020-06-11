@@ -24,7 +24,8 @@ app.use('/api',indexRouter(app));
 // Connect to MongoDB database
 mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 // Listen to the enviroment port (Heroku) or the development port
