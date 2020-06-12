@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 
 router.post('/payment', requireLogin, async (req, res) => {
     const charge = await chargePayment(req.body.id);
-    const user = await userServices.updateUserCredits(req.user.googleId);
+    const user = await userServices.addUserCredits(req.user.googleId);
     res.send(user);
 })
 
