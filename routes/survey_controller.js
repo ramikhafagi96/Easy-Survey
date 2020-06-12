@@ -10,16 +10,32 @@ const surveyTemplate = require('../services/emailTemplates/survey_template');
 
 
 router.post('/', requireLogin, requireCredits, async (req, res) => {
-    const surveyObject = processSurveyObject(req.body,req.user.id);
+    const surveyObject = new surveyServices.surveyModel(processSurveyObject(req.body,req.user.id));
     const template = surveyTemplate(surveyObject);
     try {
         await sendMail(surveyObject,template);
-        const survey = await surveyServices.createSurvey(surveyObject);
+        await surveyServices.createSurvey(surveyObject);
         const user = await userServices.deductUserCredits(req.user.googleId);
         res.send(user);
     } catch(err) {
         res.status(422).send(err);
     }
+});
+
+router.post('/webhooks', (req, res) => {
+    console.log(req.body);
+    res.send({});
+});
+
+router.get('/response/:surveyId', (req,res) => {
+    console.log(req.query);
+    if(req.query["yes"]) {
+        console.log('yes');
+    }
+    else if(req.query["no"]) {
+        console.log('no');
+    }
+    res.send('Thank you for voting');
 });
 
 router.get('/thanks', (req, res) => {
