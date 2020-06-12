@@ -16,9 +16,10 @@ export const handleToken = (token) => {
     }
 };
 
-export const sumbitSurvey = (values) => {
+export const sumbitSurvey = (values, history) => {
     return async function(dispatch) {
         const res = await axios.post('/api/survey', values);
+        history.push('/surveys');
         dispatch({ type: FETCH_USER, payload: res.data });
     }
 }
