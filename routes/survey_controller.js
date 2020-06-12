@@ -7,6 +7,8 @@ const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 const { sendMail } = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/survey_template');
+
+
 router.post('/', requireLogin, requireCredits, async (req, res) => {
     const surveyObject = processSurveyObject(req.body,req.user.id);
     const template = surveyTemplate(surveyObject);
@@ -19,6 +21,10 @@ router.post('/', requireLogin, requireCredits, async (req, res) => {
         res.status(422).send(err);
     }
 });
+
+router.get('/thanks', (req, res) => {
+    res.send('Thanks for voting :)');
+})
 
 module.exports = function (indexRouter) {
     indexRouter.use('/survey',router);

@@ -6,6 +6,10 @@ async function createSurvey(surveyObject) {
     return survey;
 }
 
+async function registerRecipientResponse() {
+    
+}
+
 module.exports = {
     createSurvey
 }
