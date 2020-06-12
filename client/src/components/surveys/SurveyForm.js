@@ -3,16 +3,10 @@ import { reduxForm, Field } from 'redux-form'; // allows our component to commun
 import { Link } from 'react-router-dom';
 import validateEmails from '../../utils/validateEmails';
 import SurveyField from './SurveyField';
-
-const FIELDS = [
-    { label: 'Campaign Title', name: 'title' },
-    { label: 'Subject Line', name: 'subject' },
-    { label: 'Email Body', name: 'body' },
-    { label: 'Recipient List', name: 'recipients' }
-];
+import formFields from './formFields';
 class SurveyForm extends Component {
     renderFields() {
-        return FIELDS.map(({ label, name }) => {
+        return formFields.map(({ label, name }) => {
             return <Field key={name} component={SurveyField} type="text" label={label} name={name} />
         })
     }
@@ -38,7 +32,7 @@ class SurveyForm extends Component {
 function validate(values) {
     const errors = {}; // errros if occured
     errors.recipients = validateEmails(values.recipients || '');
-    FIELDS.forEach(({ name }) => {
+    formFields.forEach(({ name }) => {
         if (!values[name])
             errors[name] = 'You must provide a value';
     });
