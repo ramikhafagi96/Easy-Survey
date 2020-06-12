@@ -1,10 +1,37 @@
 const keys = require('../config/keys');
-const sendgrid = require('sendgrid');
-const helper = sendgrid.mail;
-class Mailer extends helper.Mail{
-    constructor() {
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(keys.sendGridKey);
+function sendMail({ subject, recipients }, content) {
+    const msg = {
+        to: formatAddresses(recipients),
+        from: 'ramikh.developer@gmail.com',
+        subject: subject,
+        html: content,
+        trackingSettings: {
+            clickTracking: {
+                enable: true,
+                enableText: true
+            }
+        }
+    };
+    //ES8
+    (async () => {
+        try {
+            await sgMail.send(msg);
+        } catch (error) {
+            console.error(error);
 
-    }
+            if (error.response) {
+                console.error(error.response.body)
+            }
+        }
+    })();
 }
 
-module.exports = Mailer;
+function formatAddresses(recipients) {
+    return recipients.map(({ email }) => {
+      return email;
+    });
+  }
+
+module.exports = {sendMail};
