@@ -14,4 +14,11 @@ export const handleToken = (token) => {
         const res = await axios.post('/api/user/payment', token);
         dispatch({ type: FETCH_USER, payload: res.data });
     }
-} 
+};
+
+export const sumbitSurvey = (values) => {
+    return async function(dispatch) {
+        const res = await axios.post('/api/survey', values);
+        dispatch({ type: FETCH_USER, payload: res.data });
+    }
+}
