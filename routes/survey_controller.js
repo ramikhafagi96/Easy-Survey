@@ -27,7 +27,7 @@ router.post('/', requireLogin, requireCredits, async (req, res) => {
 
 router.post('/webhooks', (req, res) => {
     const p = new Path('/api/survey/response/:surveyId/:choice');
-    const events = _.chain(req.body)
+    _.chain(req.body)
       .map(({ email, url }) => {
         const match = p.test(new URL(url).pathname);
         if (match) {
@@ -36,8 +36,11 @@ router.post('/webhooks', (req, res) => {
       })
       .compact() // remove undefined responses
       .uniqBy('email', 'surveyId') // get unique response from an email on a survey
+      .value()
+      .forEach(({ surveyId, email, choice }) => {
+            surveyServices.registerRecipientResponse(surveyId, email, choice);
+      })
       .value();
-    console.log(events);
     res.send({});
 });
 
