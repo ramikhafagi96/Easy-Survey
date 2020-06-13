@@ -24,7 +24,9 @@ export const sumbitSurvey = (values, history) => {
     }
 }
 
-export const fetchSurveys = async () => {
-    const res = await axios.get('/api/survey');
-    dispatch({ type: FETCH_SURVEYS, payload: res.data });
+export const fetchSurveys = () => {
+    return async function(dispatch) {
+        const res = await axios.get('/api/survey');
+        dispatch({ type: FETCH_SURVEYS, payload: res.data });
+    }
 }
