@@ -26,17 +26,18 @@ router.post('/', requireLogin, requireCredits, async (req, res) => {
 });
 
 router.post('/webhooks', (req, res) => {
-    const events = _.map(req.body, ({ email, url }) => {
-        const pathName = new URL(url).pathname;
-        console.log("pathname", pathName);
-        const p = new Path('/api/survey/response/:surveyId/:choice');
-        const match = p.test(pathName);
-        if(match)
-            return { email, surveyId: match.surveyId, choice: match.choice};
-    });
-    const compactEvents = _.compact(events); // remove undefined events
-    const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId'); // make sure we get only one response from one email on a survey
-    console.log(uniqueEvents);
+    const p = new Path('/api/survey/response/:surveyId/:choice');
+    const events = _.chain(req.body)
+      .map(({ email, url }) => {
+        const match = p.test(new URL(url).pathname);
+        if (match) {
+          return { email, surveyId: match.surveyId, choice: match.choice };
+        }
+      })
+      .compact() // remove undefined responses
+      .uniqBy('email', 'surveyId') // get unique response from an email on a survey
+      .value();
+    console.log(events);
     res.send({});
 });
 
