@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const _ = require('lodash');
+const { Path } = require('path-parser');
+const { URL } = require('url');
 const surveyServices = require('../db/models_services/survey_services');
 const userServices = require('../db/models_services/user_services');
 const { processSurveyObject } = require('../helpers/survey_helpers');
@@ -23,18 +26,21 @@ router.post('/', requireLogin, requireCredits, async (req, res) => {
 });
 
 router.post('/webhooks', (req, res) => {
-    console.log(req.body);
+    const events = _.map(req.body, ({ email, url }) => {
+        const pathName = new URL(url).pathname;
+        console.log("pathname", pathName);
+        const p = new Path('/api/survey/response/:surveyId/:choice');
+        const match = p.test(pathName);
+        if(match)
+            return { email, surveyId: match.surveyId, choice: match.choice};
+    });
+    const compactEvents = _.compact(events); // remove undefined events
+    const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId'); // make sure we get only one response from one email on a survey
+    console.log(uniqueEvents);
     res.send({});
 });
 
-router.get('/response/:surveyId', (req,res) => {
-    console.log(req.query);
-    if(req.query["yes"]) {
-        console.log('yes');
-    }
-    else if(req.query["no"]) {
-        console.log('no');
-    }
+router.get('/response/:surveyId/:choice', (req,res) => {
     res.send('Thank you for voting');
 });
 
