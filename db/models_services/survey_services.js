@@ -6,6 +6,10 @@ async function createSurvey(surveyObject) {
     return survey;
 }
 
+async function getUserSurveys(userId) {
+    return await surveyModel.find({ _user: userId }).select({ recipients: false });
+}
+
 async function registerRecipientResponse(surveyId, email, choice) {
     await surveyModel.updateOne({
         _id: surveyId,
@@ -24,5 +28,6 @@ async function registerRecipientResponse(surveyId, email, choice) {
 module.exports = {
     createSurvey,
     registerRecipientResponse,
+    getUserSurveys,
     surveyModel
 }

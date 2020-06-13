@@ -44,10 +44,15 @@ router.post('/webhooks', (req, res) => {
     res.send({});
 });
 
+router.get('/', requireLogin, async (req, res) => {
+    const surveys = await surveyServices.getUserSurveys(req.user.id);
+    res.send(surveys);
+});
+
 router.get('/response/:surveyId/:choice', (req,res) => {
     res.send('Thank you for voting');
 });
-
+ 
 router.get('/thanks', (req, res) => {
     res.send('Thanks for voting :)');
 })
