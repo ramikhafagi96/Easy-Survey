@@ -36,7 +36,6 @@ router.post('/webhooks', (req, res) => {
       })
       .compact() // remove undefined responses
       .uniqBy('email', 'surveyId') // get unique response from an email on a survey
-      .value()
       .forEach(({ surveyId, email, choice }) => {
             surveyServices.registerRecipientResponse(surveyId, email, choice);
       })

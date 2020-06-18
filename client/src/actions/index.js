@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { FETCH_USER, FETCH_SURVEYS } from './types';
 
-export const fetchUser =  () => {
+export const fetchUser =  () => { // Action Creator
     return async function(dispatch) {
-        const res = await axios.get('/api/user')
+        const res = await axios.get('/api/user');
+        // Action (type, payload)
         dispatch({ type: FETCH_USER, payload: res.data }); // dispatch function passed by redux-thunk middleware
     }
 
