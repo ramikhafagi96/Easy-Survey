@@ -6,7 +6,8 @@ const Landing = () => {
             <h1>
                 Easy Survey!
             </h1>
-            Collect Feedback From Users
+            Collect Feedback From Users!
+            Made By Rami Mohamed Khafagi
         </div>
     );
 };
